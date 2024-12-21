@@ -12,7 +12,7 @@ def index():
 def caught():
     return render_template('caught.html')
 
-# For Code submit and submissions page
+# For Code submit and submissions page|
 @app.route('/submit')
 def submit():
     return render_template('submits/submit.html')
