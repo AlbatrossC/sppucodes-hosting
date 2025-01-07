@@ -1,15 +1,25 @@
 from flask import Flask, render_template, send_from_directory, abort
+from flask_sqlalchemy import SQLAlchemy
 import os
-from flask import Blueprint
-from inputs.contact import contact, db 
+from dotenv import load_dotenv
+from inputs.contact import contact, db
 
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///contact.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
+    'DATABASE_URL', 
+    'mysql+pymysql://root:mypassword@localhost:3306/sppu_contact'
+)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Initialize SQLAlchemy
 db.init_app(app)
+
+# Register the contact blueprint
 app.register_blueprint(contact)
 
-# Create tables
+# Create tables in the database on startup
 with app.app_context():
     db.create_all()
 
@@ -20,9 +30,11 @@ def index():
 
 # For Downloading codes
 downloads_folder = os.path.join(app.root_path, 'downloads')
+
 @app.route('/download')
 def download():
     return render_template('download.html')
+
 @app.route('/downloads/<filename>')
 def download_file(filename):
     return send_from_directory(downloads_folder, filename)
@@ -35,7 +47,7 @@ def subject(subject_name):
     except Exception:
         return render_template("error.html")
 
-#files 
+# Serve files
 @app.route('/<subject>/<filename>')
 def get_answer(subject, filename):
     try:      
@@ -64,9 +76,10 @@ def get_image(filename):
 @app.route('/sitemap.xml')
 def sitemap():
     return send_from_directory('seo', 'sitemap.xml')
+
 @app.route('/robots.txt')
 def robots():
     return send_from_directory('seo', 'robots.txt')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=  int("3000") , debug=True)
+    app.run(host='0.0.0.0', port=int("3000"), debug=True)

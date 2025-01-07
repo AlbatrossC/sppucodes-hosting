@@ -7,3 +7,6 @@ instance/
 
 __pycache__/
 *.pyc
+
+#For Mysql dataconnection
+.env

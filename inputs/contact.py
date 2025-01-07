@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template, request
+from flask import Blueprint, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
 # Create the SQLAlchemy instance without passing the app
