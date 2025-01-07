@@ -1,5 +1,4 @@
 from flask import Flask, render_template, send_from_directory, abort
-from flask_sqlalchemy import SQLAlchemy
 import os
 from dotenv import load_dotenv
 
