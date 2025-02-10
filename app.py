@@ -15,7 +15,12 @@ def connect_db():
         return None
 
 
-@app.route('/submit' , methods=["GET" , "POST"])
+from flask import Flask, render_template, request, redirect, url_for, flash
+
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'  # Required for flash messages
+
+@app.route('/submit', methods=["GET", "POST"])
 def submit():
     conn = connect_db()
     if conn is None:
@@ -28,7 +33,6 @@ def submit():
             name = request.form.get("name")
             year = request.form.get("year")
             branch = request.form.get("branch")
-
             subject = request.form.get("subject")
             question = request.form.get("question")
             answer = request.form.get("answer")
@@ -37,19 +41,19 @@ def submit():
                 cur.execute("INSERT INTO codes (name, year, branch, subject, question, answer) VALUES (%s,%s,%s,%s,%s,%s)",
                             (name, year, branch, subject, question, answer))
                 conn.commit()
-                feedback = "Code Sent Sucessfully! Thank you"
-            
+                flash("Code Sent Successfully! Thank you", "success")
+                return redirect(url_for('submit'))
+
             else:
-                feedback = "PLEASE FILL ALL NECESSARY FIELDS"
+                flash("PLEASE FILL ALL NECESSARY FIELDS", "error")
 
             cur.close()
 
         except Exception as e:
-            feedback = f"Error inserting data: {e}"
+            flash(f"Error inserting data: {e}", "error")
         finally:
             conn.close()
 
-        return render_template ("submit.html" , message = feedback)
     return render_template("submit.html")
 
 
