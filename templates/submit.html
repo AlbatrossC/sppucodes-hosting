@@ -4,272 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Code</title>
-    <style>
-        :root {
-            --primary-bg: #121212;
-            --secondary-bg: #1e1e1e;
-            --border-color: #2a2a2a;
-            --text-primary: #e0e0e0;
-            --text-secondary: #ccc;
-            --text-muted: #aaa;
-            --accent-color: #2d76cc;
-            --accent-hover: #1d5bb1;
-            --shadow-color: rgba(0, 0, 0, 0.2);
-            --card-bg: #242424;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: all 0.2s ease-in-out;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--primary-bg);
-            color: var(--text-primary);
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-
-        .container {
-            width: 100%;
-            min-height: 100vh;
-            padding: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .form-wrapper {
-            width: 100%;
-            max-width: 650px;
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
-        }
-
-        h1 {
-            color: var(--text-primary);
-            font-size: 1.75rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            background-color: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            border-radius: 8px;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-        }
-
-        input:hover, select:hover, textarea:hover {
-            border-color: var(--accent-color);
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(45, 118, 204, 0.15);
-        }
-
-        select {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232d76cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 18px;
-            padding-right: 2.5rem;
-        }
-
-        select option {
-            background-color: var(--secondary-bg);
-            color: var(--text-primary);
-            padding: 0.5rem;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-            line-height: 1.6;
-        }
-
-        textarea#answer {
-            min-height: 150px;
-        }
-
-        .button {
-            background-color: var(--accent-color);
-            color: white;
-            padding: 1rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            width: 100%;
-            transition: all 0.2s ease;
-            margin-top: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .button:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(45, 118, 204, 0.2);
-        }
-
-        .button:active {
-            transform: translateY(0);
-        }
-
-        #part2 {
-            display: none;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        .message {
-            background-color: var(--secondary-bg);
-            color: var(--text-primary);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            font-size: 0.95rem;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 640px) {
-            .container {
-                padding: 1rem;
-            }
-            
-            .form-wrapper {
-                padding: 1.5rem;
-                border-radius: 12px;
-            }
-
-            h1 {
-                font-size: 1.5rem;
-                margin-bottom: 1.5rem;
-            }
-        }
-
-        /* Progress indicator */
-        .progress-steps {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-            gap: 1rem;
-        }
-
-        .step {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--border-color);
-        }
-
-        .step.active {
-            background-color: var(--accent-color);
-            transform: scale(1.2);
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="form-wrapper">
-            <h1>Submit Code</h1>
-            <div class="progress-steps">
-                <div class="step active" id="step1"></div>
-                <div class="step" id="step2"></div>
-            </div>
-            {% if message %}
-            <div class="message">{{ message }}</div>
-            {% endif %}
-            <form method="POST" action="{{ url_for('submit') }}">
-                <div id="part1">
-                    <div class="form-group">
-                        <label for="name">Name (Optional)</label>
-                        <input type="text" id="name" name="name" placeholder="Enter your name">
-                    </div>
-                    <div class="form-group">
-                        <label for="year">Year</label>
-                        <select id="year" name="year" required>
-                            <option value="">Select your year</option>
-                            <option value="FE">First Year</option>
-                            <option value="SE">Second Year</option>
-                            <option value="TE">Third Year</option>
-                            <option value="BE">Final Year</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="branch">Branch</label>
-                        <select id="branch" name="branch" required>
-                            <option value="">Select your branch</option>
-                            <option value="CS">Computer Science</option>
-                            <option value="IT">Information Technology</option>
-                            <option value="AI DS">AI & Data Science</option>
-                            <option value="AI ML">AI & Machine Learning</option>
-                        </select>
-                    </div>
-                    <button type="button" class="button" onclick="showPart2()">Continue →</button>
-                </div>
-
-                <div id="part2">
-                    <div class="form-group">
-                        <label for="subject">Subject Name</label>
-                        <input type="text" id="subject" name="subject" required placeholder="Enter subject name">
-                    </div>
-                    <div class="form-group">
-                        <label for="question">Question</label>
-                        <textarea id="question" name="question" placeholder="Type your question here" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="answer">Answer</label>
-                        <textarea id="answer" name="answer" placeholder="Type your answer here" required></textarea>
-                    </div>
-                    <button type="submit" class="button">Submit Code</button>
-                </div>
-            </form>
+    <div>
+        <h1>Submit Code</h1>
+        <div>
+            <div id="step1">Step 1</div>
+            <div id="step2" style="display: none;">Step 2</div>
         </div>
+        {% if message %}
+        <div>{{ message }}</div>
+        {% endif %}
+        <form method="POST" action="{{ url_for('submit') }}">
+            <div id="part1">
+                <label for="name">Name (Optional)</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name">
+                
+                <label for="year">Year</label>
+                <select id="year" name="year" required>
+                    <option value="">Select your year</option>
+                    <option value="FE">First Year</option>
+                    <option value="SE">Second Year</option>
+                    <option value="TE">Third Year</option>
+                    <option value="BE">Final Year</option>
+                </select>
+                
+                <label for="branch">Branch</label>
+                <select id="branch" name="branch" required>
+                    <option value="">Select your branch</option>
+                    <option value="CS">Computer Science</option>
+                    <option value="IT">Information Technology</option>
+                    <option value="AI DS">AI & Data Science</option>
+                    <option value="AI ML">AI & Machine Learning</option>
+                </select>
+                
+                <button type="button" onclick="showPart2()">Continue →</button>
+            </div>
+
+            <div id="part2" style="display: none;">
+                <label for="subject">Subject Name</label>
+                <input type="text" id="subject" name="subject" required placeholder="Enter subject name">
+                
+                <label for="question">Question</label>
+                <textarea id="question" name="question" placeholder="Type your question here" required></textarea>
+                
+                <label for="answer">Answer</label>
+                <textarea id="answer" name="answer" placeholder="Type your answer here" required></textarea>
+                
+                <button type="submit">Submit Code</button>
+            </div>
+        </form>
     </div>
 
     <script>
@@ -281,8 +65,8 @@
             if (year && branch) {
                 document.getElementById('part1').style.display = 'none';
                 document.getElementById('part2').style.display = 'block';
-                document.getElementById('step1').classList.remove('active');
-                document.getElementById('step2').classList.add('active');
+                document.getElementById('step1').style.display = 'none';
+                document.getElementById('step2').style.display = 'block';
                 
                 if (!name) {
                     document.getElementById('name').value = 'Anonymous';
