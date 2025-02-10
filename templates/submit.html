@@ -4,29 +4,156 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Code</title>
+    <style>
+        :root {
+            --primary-bg: #121212;
+            --secondary-bg: #1e1e1e;
+            --header-bg: #1a1a1a;
+            --border-color: #333;
+            --text-primary: #e0e0e0;
+            --text-secondary: #ccc;
+            --accent-color: #4CAF50; /* Green color for the home button */
+            --accent-hover: #45a049; /* Darker green for hover */
+            --transition-speed: 0.3s;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        .header {
+            display: flex;
+            justify-content: center; /* Center the header content */
+            align-items: center;
+            background-color: var(--header-bg);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: relative; /* For positioning the home button */
+        }
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center; /* Center the text */
+        }
+        .home-btn {
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            transition: background var(--transition-speed) ease, transform var(--transition-speed) ease;
+            position: absolute; /* Position the home button */
+            left: 2rem; /* Adjust as needed */
+        }
+        .home-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+        .submit-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+        }
+        .step-indicator > div {
+            margin: 0 1rem;
+            font-weight: bold;
+            opacity: 0.5;
+            transition: opacity var(--transition-speed) ease, color var(--transition-speed) ease;
+        }
+        .step-indicator > div.active {
+            color: #2d76cc;
+            opacity: 1;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--secondary-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #2d76cc;
+            box-shadow: 0 0 0 3px rgba(45, 118, 204, 0.2); /* Blue shadow */
+            outline: none;
+        }
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e0e0e0'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 12px;
+        }
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            background: #2d76cc;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background var(--transition-speed) ease, transform var(--transition-speed) ease;
+        }
+        .btn:hover {
+            background: #2565a1;
+            transform: translateY(-2px);
+        }
+        #part2 {
+            display: none;
+            animation: fadeIn var(--transition-speed) ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
-    <div align="center" style="max-width: 500px; margin: 0 auto; padding: 20px;">
-        <div>
-            Warning: No CSS because the developer fucking doesn't know how 😂
-        </div>
+    <header class="header">
+        <a href="#" class="home-btn">Home</a>
+        <div class="header-title">Submit Code</div>
+    </header>
 
-        <h1>Submit Code</h1>
-        <div>
-            <div id="step1" style="font-weight: bold; margin-bottom: 10px;">Step 1</div>
-            <div id="step2" style="display: none; font-weight: bold; margin-bottom: 10px;">Step 2</div>
+    <div class="submit-container">
+        <div class="step-indicator">
+            <div id="step1" class="active">Step 1</div>
+            <div id="step2">Step 2</div>
         </div>
         
-        <form method="POST" action="/submit" align="left" style="width: 100%;">
+        <form method="POST" action="/submit">
             <div id="part1">
-                <div style="margin-bottom: 10px;">
-                    <label for="name" style="display: block; margin-bottom: 5px;">Name (Optional)</label>
-                    <input type="text" id="name" name="name" placeholder="Anonymous" style="width: 100%; padding: 5px;">
+                <div>
+                    <label for="name">Name (Optional)</label>
+                    <input type="text" id="name" name="name" placeholder="Anonymous">
                 </div>
                 
-                <div style="margin-bottom: 10px;">
-                    <label for="year" style="display: block; margin-bottom: 5px;">Year</label>
-                    <select id="year" name="year" required style="width: 100%; padding: 5px;">
+                <div>
+                    <label for="year">Year</label>
+                    <select id="year" name="year" required>
                         <option value="">Select your year</option>
                         <option value="FE">First Year</option>
                         <option value="SE">Second Year</option>
@@ -35,9 +162,9 @@
                     </select>
                 </div>
                 
-                <div style="margin-bottom: 10px;">
-                    <label for="branch" style="display: block; margin-bottom: 5px;">Branch</label>
-                    <select id="branch" name="branch" required style="width: 100%; padding: 5px;">
+                <div>
+                    <label for="branch">Branch</label>
+                    <select id="branch" name="branch" required>
                         <option value="">Select your branch</option>
                         <option value="CS">Computer Science</option>
                         <option value="IT">Information Technology</option>
@@ -46,30 +173,26 @@
                     </select>
                 </div>
                 
-                <div style="text-align: right; margin-top: 10px;">
-                    <button type="button" onclick="showPart2()" style="padding: 5px 10px;">Continue →</button>
-                </div>
+                <button type="button" class="btn" onclick="showPart2()">Continue →</button>
             </div>
 
-            <div id="part2" style="display: none;">
-                <div style="margin-bottom: 10px;">
-                    <label for="subject" style="display: block; margin-bottom: 5px;">Subject Name</label>
-                    <input type="text" id="subject" name="subject" required placeholder="Enter subject name" style="width: 100%; padding: 5px;">
+            <div id="part2">
+                <div>
+                    <label for="subject">Subject Name</label>
+                    <input type="text" id="subject" name="subject" required placeholder="Enter subject name">
                 </div>
                 
-                <div style="margin-bottom: 10px;">
-                    <label for="question" style="display: block; margin-bottom: 5px;">Question</label>
-                    <textarea id="question" name="question" placeholder="Type your question here" required style="width: 100%; padding: 5px; min-height: 100px;"></textarea>
+                <div>
+                    <label for="question">Question</label>
+                    <textarea id="question" name="question" placeholder="Type your question here" required></textarea>
                 </div>
                 
-                <div style="margin-bottom: 10px;">
-                    <label for="answer" style="display: block; margin-bottom: 5px;">Answer</label>
-                    <textarea id="answer" name="answer" placeholder="Type your answer here" required style="width: 100%; padding: 5px; min-height: 100px;"></textarea>
+                <div>
+                    <label for="answer">Answer</label>
+                    <textarea id="answer" name="answer" placeholder="Type your answer here" required></textarea>
                 </div>
                 
-                <div style="text-align: right; margin-top: 10px;">
-                    <button type="submit" style="padding: 5px 10px;">Submit Code</button>
-                </div>
+                <button type="submit" class="btn">Submit Code</button>
             </div>
         </form>
     </div>
@@ -83,8 +206,8 @@
             if (year && branch) {
                 document.getElementById('part1').style.display = 'none';
                 document.getElementById('part2').style.display = 'block';
-                document.getElementById('step1').style.display = 'none';
-                document.getElementById('step2').style.display = 'block';
+                document.getElementById('step1').classList.remove('active');
+                document.getElementById('step2').classList.add('active');
                 
                 if (!name) {
                     document.getElementById('name').value = 'Anonymous';
