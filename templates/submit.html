@@ -6,52 +6,70 @@
     <title>Submit Code</title>
 </head>
 <body>
-    <div>
+    <div align="center" style="max-width: 500px; margin: 0 auto; padding: 20px;">
+        <div>
+            Warning: No CSS because the developer fucking doesn't know how 😂
+        </div>
+
         <h1>Submit Code</h1>
         <div>
-            <div id="step1">Step 1</div>
-            <div id="step2" style="display: none;">Step 2</div>
+            <div id="step1" style="font-weight: bold; margin-bottom: 10px;">Step 1</div>
+            <div id="step2" style="display: none; font-weight: bold; margin-bottom: 10px;">Step 2</div>
         </div>
-        {% if message %}
-        <div>{{ message }}</div>
-        {% endif %}
-        <form method="POST" action="{{ url_for('submit') }}">
+        
+        <form method="POST" action="/submit" align="left" style="width: 100%;">
             <div id="part1">
-                <label for="name">Name (Optional)</label>
-                <input type="text" id="name" name="name" placeholder="Enter your name">
+                <div style="margin-bottom: 10px;">
+                    <label for="name" style="display: block; margin-bottom: 5px;">Name (Optional)</label>
+                    <input type="text" id="name" name="name" placeholder="Anonymous" style="width: 100%; padding: 5px;">
+                </div>
                 
-                <label for="year">Year</label>
-                <select id="year" name="year" required>
-                    <option value="">Select your year</option>
-                    <option value="FE">First Year</option>
-                    <option value="SE">Second Year</option>
-                    <option value="TE">Third Year</option>
-                    <option value="BE">Final Year</option>
-                </select>
+                <div style="margin-bottom: 10px;">
+                    <label for="year" style="display: block; margin-bottom: 5px;">Year</label>
+                    <select id="year" name="year" required style="width: 100%; padding: 5px;">
+                        <option value="">Select your year</option>
+                        <option value="FE">First Year</option>
+                        <option value="SE">Second Year</option>
+                        <option value="TE">Third Year</option>
+                        <option value="BE">Final Year</option>
+                    </select>
+                </div>
                 
-                <label for="branch">Branch</label>
-                <select id="branch" name="branch" required>
-                    <option value="">Select your branch</option>
-                    <option value="CS">Computer Science</option>
-                    <option value="IT">Information Technology</option>
-                    <option value="AI DS">AI & Data Science</option>
-                    <option value="AI ML">AI & Machine Learning</option>
-                </select>
+                <div style="margin-bottom: 10px;">
+                    <label for="branch" style="display: block; margin-bottom: 5px;">Branch</label>
+                    <select id="branch" name="branch" required style="width: 100%; padding: 5px;">
+                        <option value="">Select your branch</option>
+                        <option value="CS">Computer Science</option>
+                        <option value="IT">Information Technology</option>
+                        <option value="AI DS">AI & Data Science</option>
+                        <option value="AI ML">AI & Machine Learning</option>
+                    </select>
+                </div>
                 
-                <button type="button" onclick="showPart2()">Continue →</button>
+                <div style="text-align: right; margin-top: 10px;">
+                    <button type="button" onclick="showPart2()" style="padding: 5px 10px;">Continue →</button>
+                </div>
             </div>
 
             <div id="part2" style="display: none;">
-                <label for="subject">Subject Name</label>
-                <input type="text" id="subject" name="subject" required placeholder="Enter subject name">
+                <div style="margin-bottom: 10px;">
+                    <label for="subject" style="display: block; margin-bottom: 5px;">Subject Name</label>
+                    <input type="text" id="subject" name="subject" required placeholder="Enter subject name" style="width: 100%; padding: 5px;">
+                </div>
                 
-                <label for="question">Question</label>
-                <textarea id="question" name="question" placeholder="Type your question here" required></textarea>
+                <div style="margin-bottom: 10px;">
+                    <label for="question" style="display: block; margin-bottom: 5px;">Question</label>
+                    <textarea id="question" name="question" placeholder="Type your question here" required style="width: 100%; padding: 5px; min-height: 100px;"></textarea>
+                </div>
                 
-                <label for="answer">Answer</label>
-                <textarea id="answer" name="answer" placeholder="Type your answer here" required></textarea>
+                <div style="margin-bottom: 10px;">
+                    <label for="answer" style="display: block; margin-bottom: 5px;">Answer</label>
+                    <textarea id="answer" name="answer" placeholder="Type your answer here" required style="width: 100%; padding: 5px; min-height: 100px;"></textarea>
+                </div>
                 
-                <button type="submit">Submit Code</button>
+                <div style="text-align: right; margin-top: 10px;">
+                    <button type="submit" style="padding: 5px 10px;">Submit Code</button>
+                </div>
             </div>
         </form>
     </div>
