@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit Code</title>
+    <title>SPPU CODES- Submit Code</title>
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('get_image', filename='favicon.ico') }}" type="image/x-icon">
     <style>
         :root {
             --primary-bg: #121212;
@@ -12,77 +14,124 @@
             --border-color: #333;
             --text-primary: #e0e0e0;
             --text-secondary: #ccc;
-            --accent-color: #4CAF50; /* Green color for the home button */
-            --accent-hover: #45a049; /* Darker green for hover */
+            --accent-color: #4CAF50;
+            --accent-hover: #45a049;
             --transition-speed: 0.3s;
+            --blue-accent: #2d76cc;
+            --blue-hover: #2565a1;
         }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--primary-bg);
             color: var(--text-primary);
             line-height: 1.6;
             font-size: 16px;
+            transition: background-color 0.5s ease;
         }
+
         .header {
             display: flex;
-            justify-content: center; /* Center the header content */
+            justify-content: center;
             align-items: center;
             background-color: var(--header-bg);
             padding: 1rem 2rem;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            position: relative; /* For positioning the home button */
+            position: relative;
+            animation: slideDown 0.5s ease-out;
         }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
         .header-title {
             font-size: 1.5rem;
             font-weight: bold;
-            text-align: center; /* Center the text */
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 0.3s forwards;
         }
+
         .home-btn {
             background: var(--accent-color);
             color: white;
             text-decoration: none;
             padding: 0.75rem 1.5rem;
             border-radius: 6px;
-            transition: background var(--transition-speed) ease, transform var(--transition-speed) ease;
-            position: absolute; /* Position the home button */
-            left: 2rem; /* Adjust as needed */
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: absolute;
+            left: 2rem;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 0.3s forwards;
         }
+
         .home-btn:hover {
             background: var(--accent-hover);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
         }
+
         .submit-container {
             max-width: 600px;
             margin: 2rem auto;
             padding: 0 1rem;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 0.5s forwards;
         }
+
         .step-indicator {
             display: flex;
             justify-content: center;
             margin-bottom: 2rem;
             color: var(--text-secondary);
         }
+
         .step-indicator > div {
             margin: 0 1rem;
             font-weight: bold;
             opacity: 0.5;
-            transition: opacity var(--transition-speed) ease, color var(--transition-speed) ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
+
         .step-indicator > div.active {
-            color: #2d76cc;
+            color: var(--blue-accent);
             opacity: 1;
+            transform: scale(1.05);
         }
+
+        .step-indicator > div.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--blue-accent);
+            animation: scaleX 0.3s ease-out forwards;
+        }
+
+        @keyframes scaleX {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
         label {
             display: block;
             margin-bottom: 0.75rem;
             color: var(--text-secondary);
             font-size: 1rem;
+            transition: color 0.3s ease;
         }
+
         input, select, textarea {
             width: 100%;
             padding: 1rem;
@@ -92,45 +141,80 @@
             border-radius: 8px;
             margin-bottom: 1.5rem;
             font-size: 1rem;
-            transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        input:hover, select:hover, textarea:hover {
+            border-color: var(--blue-accent);
+        }
+
         input:focus, select:focus, textarea:focus {
-            border-color: #2d76cc;
-            box-shadow: 0 0 0 3px rgba(45, 118, 204, 0.2); /* Blue shadow */
+            border-color: var(--blue-accent);
+            box-shadow: 0 0 0 3px rgba(45, 118, 204, 0.2);
             outline: none;
+            transform: translateY(-1px);
         }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
         select {
             appearance: none;
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e0e0e0'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
             background-repeat: no-repeat;
             background-position: right 1rem center;
             background-size: 12px;
+            cursor: pointer;
         }
+
         .btn {
             width: 100%;
             padding: 1rem;
-            background: #2d76cc;
+            background: var(--blue-accent);
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
             font-weight: bold;
-            transition: background var(--transition-speed) ease, transform var(--transition-speed) ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
+
         .btn:hover {
-            background: #2565a1;
+            background: var(--blue-hover);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(45, 118, 204, 0.2);
         }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
         #part2 {
             display: none;
-            animation: fadeIn var(--transition-speed) ease;
+            animation: slideUp 0.4s ease-out;
         }
+
+        @keyframes slideUp {
+            from { 
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        /* Flash Messages Styling */
+
         .flash-message {
             padding: 1rem;
             margin: 1rem auto;
@@ -138,20 +222,37 @@
             border-radius: 8px;
             text-align: center;
             font-weight: bold;
+            animation: slideIn 0.5s ease-out;
+            transform-origin: top;
         }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         .flash-message.success {
-            background-color: #4CAF50;
+            background-color: var(--accent-color);
             color: white;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
         }
+
         .flash-message.error {
             background-color: #f44336;
             color: white;
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.2);
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <a href="#" class="home-btn">Home</a>
+        <a href="/" class="home-btn">Home</a>
         <div class="header-title">Submit Code</div>
     </header>
 
