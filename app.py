@@ -1,7 +1,50 @@
-from flask import Flask, render_template, send_from_directory, abort
+from flask import Flask, render_template, send_from_directory, abort, request
 import os
+import psycopg2
 
 app = Flask(__name__)
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+def connect_db():
+    try:
+        conn = psycopg2.connect(DATABASE_URL)
+        return conn
+    except Exception as e:
+        print(f"Database connection error: {e}")
+        return None
+
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+    conn = connect_db()
+    if conn is None:
+        return "Database connection error. Please try again later."
+
+    if request.method == "POST":
+        try:
+            cur = conn.cursor()
+
+            name = request.form.get("name")
+            email = request.form.get("email")
+            message = request.form.get("msg")  # Fixed the mismatch
+
+            if name and email and message:
+                cur.execute("INSERT INTO contacts (name, email, message) VALUES (%s, %s, %s)", 
+                            (name, email, message))
+                conn.commit()
+                feedback = "Message sent successfully"
+            else:
+                feedback = "All fields are required"
+
+            cur.close()
+        except Exception as e:
+            feedback = f"Error inserting data: {e}"
+        finally:
+            conn.close()
+
+        return render_template("contact.html", message=feedback)
+
+    return render_template("contact.html")
 
 # Home Page: Index.html
 @app.route('/')
