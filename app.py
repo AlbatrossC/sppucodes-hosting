@@ -14,6 +14,45 @@ def connect_db():
         print(f"Database connection error: {e}")
         return None
 
+
+@app.route('/submit' , methods=["GET" , "POST"])
+def submit():
+    conn = connect_db()
+    if conn is None:
+        return "Database Connection error. Please try again later"
+
+    if request.method == "POST":
+        try:
+            cur = conn.cursor()
+
+            name = request.form.get("name")
+            year = request.form.get("year")
+            branch = request.form.get("branch")
+
+            subject = request.form.get("subject")
+            question = request.form.get("question")
+            answer = request.form.get("answer")
+
+            if name and year and branch and subject and question and answer:
+                cur.execute("INSERT INTO codes (name, year, branch, subject, question, answer) VALUES (%s,%s,%s,%s,%s,%s)",
+                            (name, year, branch, subject, question, answer))
+                conn.commit()
+                feedback = "Code Sent Sucessfully! Thank you"
+            
+            else:
+                feedback = "PLEASE FILL ALL NECESSARY FIELDS"
+
+            cur.close()
+
+        except Exception as e:
+            feedback = f"Error inserting data: {e}"
+        finally:
+            conn.close()
+
+        return render_template ("submit.html" , message = feedback)
+    return render_template("submit.html")
+
+
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     conn = connect_db()
@@ -26,7 +65,7 @@ def contact():
 
             name = request.form.get("name")
             email = request.form.get("email")
-            message = request.form.get("msg")  # Fixed the mismatch
+            message = request.form.get("msg")
 
             if name and email and message:
                 cur.execute("INSERT INTO contacts (name, email, message) VALUES (%s, %s, %s)", 
