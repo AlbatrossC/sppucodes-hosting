@@ -58,6 +58,7 @@ def submit():
 
 
 @app.route("/contact", methods=["GET", "POST"])
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
     conn = connect_db()
     if conn is None:
@@ -75,17 +76,16 @@ def contact():
                 cur.execute("INSERT INTO contacts (name, email, message) VALUES (%s, %s, %s)", 
                             (name, email, message))
                 conn.commit()
-                feedback = "Message sent successfully"
+                flash("Message sent successfully! Thank you", "success")
+                return redirect(url_for('contact'))
             else:
-                feedback = "All fields are required"
+                flash("PLEASE FILL ALL NECESSARY FIELDS", "error")
 
             cur.close()
         except Exception as e:
-            feedback = f"Error inserting data: {e}"
+            flash(f"Error inserting data: {e}", "error")
         finally:
             conn.close()
-
-        return render_template("contact.html", message=feedback)
 
     return render_template("contact.html")
 

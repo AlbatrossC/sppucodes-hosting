@@ -142,11 +142,16 @@
 
     <div class="content">
         <div class="container">
-            {% if message %}
-            <div class="feedback {{ 'success' if message=='Message sent successfully' else 'error' }}">
-                {{ message }}
-            </div>
-            {% endif %}
+            <!-- Display flashed messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="feedback {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
 
             <section class="group">
                 <h2>Get in Touch</h2>
