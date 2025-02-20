@@ -108,6 +108,11 @@ def subject(subject_name):
         return render_template(f'subjects/{subject_name}.html')
     except Exception:
         return render_template("error.html")
+    
+@app.route('/bace7342f50c4345b7671904bd8ada1a.txt')
+def verify():
+    return send_from_directory('.', 'bace7342f50c4345b7671904bd8ada1a.txt')
+    
 
 @app.route('/<subject>/<filename>')
 def get_answer(subject, filename):
