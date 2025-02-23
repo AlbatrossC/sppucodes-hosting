@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ url_for('get_image', filename='favicon.ico') }}" type="image/x-icon">
     <title>Sppu Codes - Copy</title>
+    <!-- Preload SVGs for faster loading -->
+    <link rel="preload" href="{{ url_for('static', filename='svg/steps.svg') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='svg/command.svg') }}" as="image">
     <style>
-        /* CSS Variables */
         :root {
             --primary-blue: #2196F3;
             --secondary-blue: #1976D2;
@@ -18,7 +20,6 @@
             --accent-green: #4f4caf;
         }
 
-        /* Reset and Base Styles */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             margin: 0;
@@ -33,9 +34,11 @@
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             min-height: 100vh;
             line-height: 1.6;
+            opacity: 0; /* Start hidden until loaded */
+            transition: opacity 0.3s ease;
         }
+        body.loaded { opacity: 1; } /* Fade in when loaded */
 
-        /* Floating Home Button */
         .home-button {
             position: fixed;
             top: 20px;
@@ -62,7 +65,6 @@
         }
         .home-button:active { transform: scale(0.9); }
 
-        /* Typography */
         .page-title {
             font-size: 2.5rem;
             color: var(--accent-red);
@@ -107,7 +109,6 @@
             width: 100%;
         }
 
-        /* SVG and Media */
         .svg-wrapper {
             width: 100%;
             max-width: 800px;
@@ -119,9 +120,11 @@
             width: 100%;
             height: auto;
             max-height: 400px;
+            opacity: 0; /* Start hidden */
+            transition: opacity 0.3s ease;
         }
+        .svg-image.loaded { opacity: 1; } /* Fade in when loaded */
 
-        /* Buttons */
         .button-container {
             margin: 2rem 0;
             display: flex;
@@ -149,7 +152,6 @@
         }
         .custom-button:active { transform: translateY(0); }
 
-        /* Example Box */
         .example-box {
             background-color: var(--surface);
             padding: 2rem;
@@ -199,7 +201,6 @@
         }
         .copy-button:hover { background-color: #CC0000; }
 
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -214,9 +215,7 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        .modal.show {
-            opacity: 1;
-        }
+        .modal.show { opacity: 1; }
         .modal-content {
             background-color: var(--surface);
             padding: 2rem;
@@ -230,9 +229,7 @@
             transition: transform 0.3s ease;
             border: 1px solid rgba(0, 0, 0, 0.2);
         }
-        .modal.show .modal-content {
-            transform: scale(1);
-        }
+        .modal.show .modal-content { transform: scale(1); }
         .modal-close {
             position: absolute;
             top: 10px;
@@ -259,7 +256,6 @@
         }
         .subject-list li:last-child { border-bottom: none; }
 
-        /* Media Queries */
         @media (max-width: 800px) {
             body { padding: 1rem; }
             h2 { font-size: 1.5rem; }
@@ -271,7 +267,6 @@
             .example-box p { font-size: 0.85rem; }
         }
 
-        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -339,22 +334,38 @@
     </div>
 
     <script>
-        // JavaScript Section
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text)
-                .then(() => {
-                    alert('Copied to clipboard: ' + text);
-                })
-                .catch(err => {
-                    console.error('Failed to copy: ', err);
-                });
+                .then(() => alert('Copied to clipboard: ' + text))
+                .catch(err => console.error('Failed to copy: ', err));
         }
 
-        // Modal Functionality
         document.addEventListener('DOMContentLoaded', () => {
             const modal = document.getElementById('subjectsModal');
             const btn = document.getElementById('subjectsButton');
             const closeBtn = document.getElementById('closeModal');
+            const svgs = document.querySelectorAll('.svg-image');
+            let svgsLoaded = 0;
+
+            // Load SVGs first and show them when ready
+            svgs.forEach(svg => {
+                svg.addEventListener('load', () => {
+                    svgsLoaded++;
+                    svg.classList.add('loaded');
+                    if (svgsLoaded === svgs.length) {
+                        document.body.classList.add('loaded');
+                    }
+                });
+                // Fallback if SVG fails to load
+                setTimeout(() => {
+                    if (!svg.classList.contains('loaded')) {
+                        svgsLoaded++;
+                        if (svgsLoaded === svgs.length) {
+                            document.body.classList.add('loaded');
+                        }
+                    }
+                }, 2000);
+            });
 
             if (!modal || !btn || !closeBtn) {
                 console.error('Modal elements not found');
@@ -363,33 +374,25 @@
 
             btn.addEventListener('click', () => {
                 modal.style.display = 'flex';
-                setTimeout(() => {
-                    modal.classList.add('show');
-                }, 10);
+                setTimeout(() => modal.classList.add('show'), 10);
             });
 
             closeBtn.addEventListener('click', () => {
                 modal.classList.remove('show');
-                setTimeout(() => {
-                    modal.style.display = 'none';
-                }, 300);
+                setTimeout(() => modal.style.display = 'none', 300);
             });
 
             window.addEventListener('click', (event) => {
                 if (event.target === modal) {
                     modal.classList.remove('show');
-                    setTimeout(() => {
-                        modal.style.display = 'none';
-                    }, 300);
+                    setTimeout(() => modal.style.display = 'none', 300);
                 }
             });
 
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape' && modal.classList.contains('show')) {
                     modal.classList.remove('show');
-                    setTimeout(() => {
-                        modal.style.display = 'none';
-                    }, 300);
+                    setTimeout(() => modal.style.display = 'none', 300);
                 }
             });
         });
