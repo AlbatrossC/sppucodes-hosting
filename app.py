@@ -1,40 +1,27 @@
 from flask import Flask, render_template, send_from_directory, abort, request, redirect, url_for, flash
 import os
 import psycopg2
-from psycopg2 import pool
-from flask_caching import Cache
-from flask_compress import Compress
+from hosting.quecount import quecount_bp
 
-# Initialize Flask app
 app = Flask(__name__)
 app.secret_key = 'karlos'
 
-# Initialize caching
-cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+# Register the quecount blueprint
+app.register_blueprint(quecount_bp)
 
-# Initialize compression
-Compress(app)
-
-# Database connection pool
 DATABASE_URL = os.getenv("DATABASE_URL")
-connection_pool = pool.SimpleConnectionPool(
-    minconn=1,
-    maxconn=10,
-    dsn=DATABASE_URL
-)
 
-def get_db_connection():
-    """Get a connection from the connection pool."""
-    return connection_pool.getconn()
-
-def return_db_connection(conn):
-    """Return a connection to the connection pool."""
-    connection_pool.putconn(conn)
+def connect_db():
+    try:
+        conn = psycopg2.connect(DATABASE_URL)
+        return conn
+    except Exception as e:
+        print(f"Database connection error: {e}")
+        return None
 
 @app.route('/submit', methods=["GET", "POST"])
 def submit():
-    """Handle form submission."""
-    conn = get_db_connection()
+    conn = connect_db()
     if conn is None:
         return "Database Connection error. Please try again later"
 
@@ -62,31 +49,30 @@ def submit():
         except Exception as e:
             flash(f"Error inserting data: {e}", "error")
         finally:
-            return_db_connection(conn)
+            conn.close()
 
     return render_template("submit.html")
 
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
-    """Handle contact form submission."""
     if request.method == "POST":
         name = request.form.get("name")
         email = request.form.get("email")
-        message = request.form.get("message")
+        message = request.form.get("message")  # Changed from "msg" to "message"
 
         if name and email and message:
             try:
-                conn = get_db_connection()
+                conn = connect_db()
                 if conn is None:
                     flash("Database connection error. Please try again later.", "error")
                     return redirect(url_for('contact'))
 
                 cur = conn.cursor()
                 cur.execute("INSERT INTO contacts (name, email, message) VALUES (%s, %s, %s)", 
-                            (name, email, message))
+                          (name, email, message))
                 conn.commit()
                 cur.close()
-                return_db_connection(conn)
+                conn.close()
                 
                 flash("Message sent successfully! Thank you", "success")
             except Exception as e:
@@ -98,9 +84,7 @@ def contact():
     return render_template("contact.html")
 
 @app.route('/')
-@cache.cached(timeout=50)  # Cache the index page for 50 seconds
 def index():
-    """Render the home page."""
     return render_template('index.html')
 
 # For Downloading codes
@@ -108,25 +92,19 @@ downloads_folder = os.path.join(app.root_path, 'downloads')
 
 @app.route('/download')
 def download():
-    """Render the download page."""
     return render_template('download.html')
-
 @app.route('/downloads/<filename>')
 def download_file(filename):
-    """Serve files from the downloads folder."""
     return send_from_directory(downloads_folder, filename)
 
 @app.route('/<subject_name>')
 def subject(subject_name):
-    """Render subject-specific pages."""
     try:
         return render_template(f'subjects/{subject_name}.html')
     except Exception:
         return render_template("error.html")
-
 @app.route('/<subject>/<filename>')
 def get_answer(subject, filename):
-    """Serve answer files for a subject."""
     try:      
         base_dir = os.path.abspath(os.path.dirname(__file__))
         answers_dir = os.path.join(base_dir, 'answers', subject)
@@ -144,29 +122,24 @@ def get_answer(subject, filename):
 
 @app.route('/disclaimer')
 def disclaimer():
-    """Render the disclaimer page."""
     return render_template('disclaimer.html')
 
 @app.route('/copy')
 def copy():
-    """Render the copy page."""
     return render_template('copy.html')
 
 @app.route('/images/<filename>')
 def get_image(filename):
-    """Serve images."""
     base_dir = os.path.abspath(os.path.dirname(__file__))
     images_dir = os.path.join(base_dir, 'images')
     return send_from_directory(images_dir, filename)
 
 @app.route('/sitemap.xml')
 def sitemap():
-    """Serve the sitemap."""
     return send_from_directory('.', 'sitemap.xml')
 
 @app.route('/robots.txt')
 def robots():
-    """Serve the robots.txt file."""
     return send_from_directory('.', 'robots.txt')
 
 if __name__ == '__main__':
