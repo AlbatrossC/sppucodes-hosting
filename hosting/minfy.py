@@ -29,8 +29,15 @@ def minify_file(file_path, minify_func):
     with open(file_path, "w", encoding="utf-8") as file:
         file.write(minified_content)
 
-def process_directory(base_path, extensions, minify_func):
-    for root, _, files in os.walk(base_path):
+def process_directory(base_path, extensions, minify_func, exclude_dirs=None):
+    if exclude_dirs is None:
+        exclude_dirs = []
+    
+    for root, dirs, files in os.walk(base_path):
+        # Skip excluded directories
+        if any(os.path.normpath(os.path.join(base_path, excluded)) in os.path.normpath(root) for excluded in exclude_dirs):
+            continue
+            
         for file in files:
             if file.endswith(extensions):
                 file_path = os.path.join(root, file)
@@ -44,9 +51,16 @@ if __name__ == "__main__":
         os.path.join("static", "css"): (".css", minify_css),
         os.path.join("static", "js"): (".js", minify_js),
     }
+    
+    # Directories to exclude (relative to their base path)
+    exclude_dirs = {
+        "templates": ["offline"],
+        os.path.join("static", "css"): [],
+        os.path.join("static", "js"): []
+    }
 
     # Process directories
     for dir_path, (ext, func) in directories.items():
-        process_directory(dir_path, (ext,), func)
+        process_directory(dir_path, (ext,), func, exclude_dirs.get(dir_path, []))
 
     print("Minification completed!")
