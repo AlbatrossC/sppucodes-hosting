@@ -149,5 +149,9 @@ def sitemap():
 def robots():
     return send_from_directory('.', 'robots.txt')
 
+@app.route('/10a97beaf54e42beb0342f97513b55ce.txt')
+def serve_verification_file():
+    return send_from_directory('.', '10a97beaf54e42beb0342f97513b55ce.txt')
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int("3000"), debug=True)
