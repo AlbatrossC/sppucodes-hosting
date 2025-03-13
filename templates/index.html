@@ -82,16 +82,6 @@
                 }
             }
         </script>
-
-        <!-- Register Service Worker -->
-        <script>
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(reg => console.log('Service Worker Registered!', reg))
-                    .catch(err => console.log('Service Worker Registration Failed:', err));
-            }
-        </script>
-
         <style>
             /* Critical CSS inlined for faster render */
             * {
@@ -160,37 +150,7 @@
                 color: var(--text-primary);
                 font-weight: 600;
             }
-
-            .visually-hidden {
-                position: absolute;
-                width: 1px;
-                height: 1px;
-                padding: 0;
-                margin: -1px;
-                overflow: hidden;
-                clip: rect(0, 0, 0, 0);
-                border: 0;
-            }
         </style>
-        
-        <!-- Lazy load Google Tag Manager -->
-        <script>
-            window.addEventListener('load', function() {
-                setTimeout(function() {
-                    const script = document.createElement('script');
-                    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-1R5FFVKTF8';
-                    script.async = true;
-                    document.head.appendChild(script);
-                    
-                    script.onload = function() {
-                        window.dataLayer = window.dataLayer || [];
-                        function gtag() { dataLayer.push(arguments); }
-                        gtag('js', new Date());
-                        gtag('config', 'G-1R5FFVKTF8');
-                    };
-                }, 3000);
-            });
-        </script>
     </head>
     
     <body>
@@ -219,17 +179,7 @@
                     </nav>
                 </div>
             </header>
-            
-            <!-- Popup Container -->
-            <div class="popup" id="offline-popup">
-                <div class="popup-content">
-                    Offline functionality is now available! Visit the site once online to enable offline access later.
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar"></div>
-                </div>
-            </div>
-            
+                        
             <main>
                 <section aria-labelledby="sem3-heading">
                     <h2 id="sem3-heading">Semester 3 Subjects</h2>
@@ -314,25 +264,8 @@
                 </div>
             </div>
         </footer>
-
-        <!-- Defer non-critical JavaScript -->
-        <script src="/static/js/index.js" defer></script>
         
-        <!-- Popup JavaScript -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const popup = document.getElementById('offline-popup');
-                
-                // Show popup
-                setTimeout(() => {
-                    popup.classList.add('visible');
-                }, 1000);
-                
-                // Hide popup after 5 seconds
-                setTimeout(() => {
-                    popup.classList.remove('visible');
-                }, 7000); // Hide after 6 seconds (5s animation + 1s delay)
-            });
-        </script>
+        <script src="{{ url_for('static', filename='js/index.js') }}" async></script>
+
     </body>
 </html>
