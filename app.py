@@ -2,23 +2,61 @@ from flask import Flask, render_template, send_from_directory, abort, request, r
 import os
 import psycopg2
 import json
+import requests
 from datetime import datetime
 from hosting.quecount import quecount_bp
 
 app = Flask(__name__)
 app.secret_key = 'karlos'
 
-# Register the quecount blueprint
-app.register_blueprint(quecount_bp)
+# Root directory containing the pyqs
+BASE_DIR = os.path.join(os.path.dirname(__file__), 'static', 'pyqs')
 
 # Environment variables
 DATABASE_URL = os.getenv("DATABASE_URL")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent'
 
-# Route to get the Gemini API key
-@app.route('/get-api-key')
-def get_api_key():
-    return jsonify({'api_key': GEMINI_API_KEY})
+@app.route('/questionpapers')
+def select():
+    # Render the select page at the sub-URL
+    return render_template('select.html')
+
+@app.route('/api/directories')
+def get_directories():
+    path = request.args.get('path', '')
+    # Remove 'pyqs/' prefix if present
+    if path.startswith('pyqs/'):
+        path = path[len('pyqs/'):]
+    full_path = os.path.join(BASE_DIR, path)
+    
+    if not os.path.exists(full_path):
+        print(f"Path does not exist: {full_path}")  # Debug
+        return jsonify([])
+    
+    if os.path.isdir(full_path):
+        items = os.listdir(full_path)
+        print(f"Items in {full_path}: {items}")  # Debug
+        if any(item.lower().endswith('.pdf') for item in items):
+            files = [f for f in items if f.lower().endswith('.pdf')]
+            return jsonify(files)
+        else:
+            directories = [d for d in items if os.path.isdir(os.path.join(full_path, d))]
+            return jsonify(directories)
+    return jsonify([])
+
+@app.route('/viewer')
+def viewer():
+    pdf_path = request.args.get('pdf')
+    return render_template('viewer.html', pdf_path=pdf_path)
+
+@app.route('/static/pyqs/<path:filename>')
+def serve_pdf(filename):
+    return send_from_directory(BASE_DIR, filename)
+
+# Register the quecount blueprint
+app.register_blueprint(quecount_bp)
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 # Database connection function
 def connect_db():
@@ -121,7 +159,6 @@ def download_file(filename):
     return send_from_directory(downloads_folder, filename)
 
 # Route for serving questions
-# Path to the questions directory
 QUESTIONS_DIR = os.path.join(os.path.dirname(__file__), 'questions')
 
 @app.route("/<subject_code>")
@@ -193,6 +230,43 @@ def get_answer(subject, filename):
         return send_from_directory(answers_dir, filename)
     except Exception:
         abort(404)
+
+# New endpoint to proxy Gemini API requests
+@app.route('/api/explain-code', methods=['POST'])
+def explain_code():
+    if not GEMINI_API_KEY:
+        return jsonify({"error": "API key not configured"}), 500
+
+    data = request.get_json()
+    instruction = data.get('instruction')
+    question = data.get('question')
+    code_text = data.get('codeText', '')
+
+    if not instruction or not question:
+        return jsonify({"error": "Missing instruction or question"}), 400
+
+    # Prepare the request body for Gemini API
+    request_body = {
+        "contents": [{
+            "parts": [
+                {"text": instruction},
+                {"text": f"Question: {question}\n\nCode:\n{code_text}" if code_text else f"Question: {question}"}
+            ]
+        }]
+    }
+
+    try:
+        response = requests.post(
+            f"{GEMINI_API_URL}?key={GEMINI_API_KEY}",
+            headers={"Content-Type": "application/json"},
+            json=request_body
+        )
+        response.raise_for_status()
+        response_data = response.json()
+        explanation = response_data['candidates'][0]['content']['parts'][0]['text']
+        return jsonify({"explanation": explanation})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # Route for disclaimer page
 @app.route('/disclaimer')

@@ -1,3 +1,39 @@
+console.log(`
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⡆⠀⠀⠀⢀⣴⣶⣶⣶⣶⣄⠀⣀⣴⣶⣶⣶⣶⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⣿⣿⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣸⣿⣿⣀⣀⡀⠀⠀⠀⠀⠀⠀⠈⠻⢿⢿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠿⠿⠿⠿⠿⠿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⢾⣿⣿⣿⣿⣿⣿⠆⠠⣿⡿⣿⣿⣿⢿⣿⣦⣴⣿⡿⠿⢿⣿⣷⣄⠀⢾⣿⣿⣿⣿⡿⣿⠆⢸⣿⣿⣿⣿⣿⣿⡆⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠈⢿⣿⣧⠀⠀⠀⠀⣠⣿⡿⠁⠀⣰⣿⡿⠁⠀⠀⠀⠈⠻⣿⣧⡀⠀⠘⣿⡟⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣧⡀⠀⢰⣿⡿⠁⠀⠀⣿⣿⠁⠀⠀⠀⠀⠀⠀⢻⣿⣇⠀⠀⣿⡇⠀⠀⠀⠀⠀⠸⣿⣿⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣿⣷⣴⣿⡟⠀⠀⠀⢰⣿⡟⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⣿⡇⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣿⣿⡏⠀⠀⠀⠀⠘⣿⣧⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⣿⡇⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡀⠀⠀⠀⠀⠀⣿⣿⡄⠀⠀⠀⠀⠀⠀⣿⣿⠇⠀⠀⣿⣧⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣿⣿⣇⣀⡀ ⠀⠘⢿⣿⣦⣀⠀⢀⣠⣾⣿⠏⠀⠀ ⢿⣿⣦⡀⠀⠀⣀⣼⣿⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠻⠿⠿⠿⠿⠿⠿⠿⠀⠀⠀⠀⠙⠿⢿⣿⣿⠿⠛⠁⠀⠀⠀⠀⠀⠙⠿⢿⣿⣿⡿⠟⠀⠀⠀⠀⠀
+    
+    
+            Hey, you! 👀 Guess what?
+                Sppu Codes is open-source
+                    and totally free to explore! 🎉
+                        Dive in: https://github.com/AlbatrossC/sppu-codes
+            ⠀
+    `);
+    
+(function(c, l, a, r, i, t, y) {
+    c[a] = c[a] || function() { (c[a].q = c[a].q || []).push(arguments) };
+    t = l.createElement(r);
+    t.async = 1;
+    t.src = "https://www.clarity.ms/tag/" + i;
+    y = l.getElementsByTagName(r)[0];
+    y.parentNode.insertBefore(t, y);
+})(window, document, "clarity", "script", "qnqi8o9y94");
+
 (function () {
     // Function to load Google Tag Manager asynchronously
     function loadGTM() {
@@ -49,24 +85,6 @@ const backdrop = document.createElement('div');
 backdrop.className = 'modal-backdrop';
 document.body.appendChild(backdrop);
 
-let GEMINI_API_KEY = ''; // Will be fetched from the server
-
-// Fetch the API key from the server
-fetch('/get-api-key')
-    .then(response => response.json())
-    .then(data => {
-        GEMINI_API_KEY = data.api_key;
-    })
-    .catch(error => {
-        console.error('Error fetching API key:', error);
-    });
-
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent';
-
-// Rate limiting configuration
-const RATE_LIMIT_DELAY = 1000; // 1 second delay between API calls
-let lastApiCallTime = 0;
-
 // System Instructions
 const SYSTEM_INSTRUCTIONS = {
     initial: 'You are an code explanation bot. I will provide you a question for reference and its code. your task is explain it in this format: Prefers code explanations in the following structured format: 1. Understanding the Code – Explanation of key components and their purpose. 2. Main Function Execution Flow – Step-by-step breakdown of how the program runs. 3. Summary – Key features and concepts covered in the code. Note: Break code in several parts and then explain each step in snippet format. Dont write the whole code in the chat. Also note that the explanation should be based on the syllabus of Courses present in SPPU university.',
@@ -77,31 +95,16 @@ const SYSTEM_INSTRUCTIONS = {
 // Conversation memory (supports up to 2 million tokens)
 let conversationMemory = [];
 
-// Generic function to make API requests to Gemini with rate limiting
-async function fetchFromGemini(instruction, question, codeText = '') {
-    const now = Date.now();
-    if (now - lastApiCallTime < RATE_LIMIT_DELAY) {
-        await new Promise(resolve => setTimeout(resolve, RATE_LIMIT_DELAY - (now - lastApiCallTime)));
-    }
-    lastApiCallTime = Date.now();
-
-    // Prepare the request body with the full conversation history
+// Function to fetch explanation from server-side endpoint
+async function fetchExplanation(instruction, question, codeText = '') {
     const requestBody = {
-        contents: [{
-            parts: [
-                { text: instruction },
-                { text: codeText ? `Question: ${question}\n\nCode:\n${codeText}` : `Question: ${question}` }
-            ]
-        }]
+        instruction,
+        question,
+        codeText
     };
 
-    // Add the entire conversation history to the request
-    if (conversationMemory.length > 0) {
-        requestBody.contents[0].parts.push({ text: `Conversation History:\n${conversationMemory.join('\n')}` });
-    }
-
     try {
-        const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+        const response = await fetch('/api/explain-code', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestBody),
@@ -113,13 +116,9 @@ async function fetchFromGemini(instruction, question, codeText = '') {
         }
 
         const data = await response.json();
-        
-        if (!data.candidates?.[0]?.content?.parts?.[0]) {
-            throw new Error('Unexpected API response structure');
-        }
-        
+        const responseText = data.explanation;
+
         // Store the response in conversation memory
-        const responseText = data.candidates[0].content.parts[0].text;
         conversationMemory.push(`You: ${question}`);
         conversationMemory.push(`Bot: ${responseText}`);
         
@@ -172,7 +171,6 @@ async function loadFile(subject, fileName, questionText, element) {
     }
 
     try {
-        // Updated URL to include /answers
         const response = await fetch(`/answers/${subject}/${fileName}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -317,9 +315,7 @@ async function handleFurtherQuestion() {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
     
     try {
-        const response = await fetchFromGemini(SYSTEM_INSTRUCTIONS.followup, question, codeText);
-        
-        // Convert the response to Markdown
+        const response = await fetchExplanation(SYSTEM_INSTRUCTIONS.followup, question, codeText);
         const markdownResponse = marked.parse(response);
         
         const loadingMsg = document.getElementById(loadingMsgId);
@@ -341,6 +337,7 @@ async function handleFurtherQuestion() {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
+// Function to explain code using server-side endpoint
 async function explainCode(elementId) {
     const codeElement = document.getElementById(elementId);
     if (!codeElement) return;
@@ -392,9 +389,7 @@ async function explainCode(elementId) {
     document.body.style.overflow = 'hidden';
 
     try {
-        const explanation = await fetchFromGemini(SYSTEM_INSTRUCTIONS.initial, questionText, codeText);
-        
-        // Convert the explanation to Markdown
+        const explanation = await fetchExplanation(SYSTEM_INSTRUCTIONS.initial, questionText, codeText);
         const markdownExplanation = marked.parse(explanation);
         
         // Clear loading message
@@ -415,12 +410,9 @@ async function explainCode(elementId) {
                 <div class="error-help">
                     <p>This might be due to:</p>
                     <ul>
-                        <li>Invalid API key</li>
-                        <li>API quota exceeded</li>
                         <li>Network connectivity issues</li>
-                        <li>The API request being too large</li>
+                        <li>Server-side errors</li>
                     </ul>
-                    <p>Please check the console for more details.</p>
                 </div>
             </div>
         `;
@@ -443,7 +435,6 @@ function escapeHtml(unsafe) {
 // Function to download code
 async function downloadCode(subject, fileName) {
     try {
-        // Updated URL to include /answers
         const response = await fetch(`/answers/${subject}/${fileName}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -514,5 +505,3 @@ window.addEventListener('resize', () => {
         }
     }
 });
-
-
